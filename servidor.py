@@ -4,6 +4,8 @@ import pandas as pd
 app = Flask(__name__)
 df = pd.read_excel('bank/login.xlsx')
 df['password'] = df['password'].astype(str)
+df_itens = pd.DataFrame(columns=['PI', 'Data', 'Item', 'Quantidade', 'Urgencia'])
+
 
 def verificar_login(username, password):
     # Verifique se o usuário está presente no DataFrame
@@ -37,7 +39,10 @@ def index():
         password = request.form['password']
         
         if verificar_login(username, password):
-            return render_template('adm.html')
+            if username =='adm':
+                return render_template('adm.html')
+            else:
+                return render_template('bemvindo.html')
         else:
             error_message = "Senha ou usuário incorretos. Tente novamente."
 
