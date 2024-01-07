@@ -59,7 +59,30 @@ def excluir_usuario():
 
     # Recarrega os dados atualizados após a exclusão
     return recarregar_usuarios()
+@app.route('/adm', methods=['GET'])
+def adm():
+    return render_template('adm.html')
 
 
+@app.route('/cadastrar_itens', methods=['GET', 'POST'])
+def cadastrar_itens():
+    if request.method == 'POST':
+        pi = request.form['pi']
+        data = request.form['data']
+        item = request.form['item']
+        quantidade = request.form['quantidade']
+
+        # Verifica se a checkbox "emergencia" está marcada
+        emergencia = 'emergencia' in request.form
+
+        # Aqui você pode fazer o que for necessário com os dados, por exemplo, adicionar ao DataFrame
+        print(f'PI: {pi}, Data: {data}, Item: {item}, Quantidade: {quantidade}, Emergência: {emergencia}')
+
+        # Agora, você pode processar os dados conforme necessário, como adicionar ao DataFrame df_itens
+        # ou salvar em um arquivo.
+
+        print('Item cadastrado com sucesso!')
+
+    return render_template('cadastrar_itens.html')
 if __name__ == '__main__':
     app.run(debug=True)
