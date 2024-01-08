@@ -1,0 +1,41 @@
+<!-- edit20.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Item</title>
+    <link rel="stylesheet" href="/static/styles/edit20.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Editar Item</h2>
+        <form action="#" method="post">
+            <label for="pi">PI:</label>
+            <input type="text" id="pi" name="pi" value="{{ item['PI'] }}" readonly>
+
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" value="{{ item['Data'] }}" required>
+
+            <label for="item">Item:</label>
+            <input type="text" id="item" name="item" value="{{ item['Item'] }}" required>
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" value="{{ item['Quantidade'] }}" required>
+
+            <div class="emergency-checkbox">
+                <input type="checkbox" id="emergencia" name="emergencia" {% if item['Urgencia'] %}checked{% endif %}>
+                <label for="emergencia">Emergência</label>
+            </div>
+
+            <div class="excluir-checkbox">
+                <input type="checkbox" id="excluir" name="excluir">
+                <label for="excluir">Excluir PI</label>
+            </div>
+
+            <button type="submit">Salvar Edições</button>
+        </form>
+    </div>
+</body>
+</html>

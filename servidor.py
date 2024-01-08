@@ -4,12 +4,8 @@ import pandas as pd
 app = Flask(__name__)
 df = pd.read_excel('bank/login.xlsx')
 df['password'] = df['password'].astype(str)
-df_itens = pd.DataFrame(columns=['PI', 'Data', 'Item', 'Quantidade', 'Urgencia'])
-itens = [
-    {'PI': '123', 'Data': '2022-01-01', 'Item': 'Item 1', 'Quantidade': 5, 'Urgencia': False},
-    {'PI': '456', 'Data': '2022-02-01', 'Item': 'Item 2', 'Quantidade': 10, 'Urgencia': True},
-    # Adicione mais itens conforme necessário
-]
+df_itens = pd.read_excel('bank/itens.xlsx')
+
 def pegar_itens():
     it=pd.read_excel('bank/itens.xlsx')
     return it.to_dict(orient='records')
@@ -73,6 +69,7 @@ def adm():
 
 @app.route('/cadastrar_itens', methods=['GET', 'POST'])
 def cadastrar_itens():
+    global df_itens
     if request.method == 'POST':
         pi = request.form['pi']
         data = request.form['data']
@@ -81,13 +78,9 @@ def cadastrar_itens():
 
         # Verifica se a checkbox "emergencia" está marcada
         emergencia = 'emergencia' in request.form
-
-        # Aqui você pode fazer o que for necessário com os dados, por exemplo, adicionar ao DataFrame
-        print(f'PI: {pi}, Data: {data}, Item: {item}, Quantidade: {quantidade}, Emergência: {emergencia}')
-
-        # Agora, você pode processar os dados conforme necessário, como adicionar ao DataFrame df_itens
-        # ou salvar em um arquivo.
-
+        em = pd.DataFrame({'PI': [pi], 'Data': [data], 'Item': [item], 'Quantidade': [quantidade], 'Urgencia': [emergencia]})
+        df_itens = pd.concat([df_itens, em], ignore_index=True)
+        df_itens.to_excel('bank/itens.xlsx', index=False)  # Salva os dados no arquivo Excel
         print('Item cadastrado com sucesso!')
 
     return render_template('cadastrar_itens.html')
