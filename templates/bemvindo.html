@@ -16,10 +16,10 @@
             <li><a href="#" onclick="carregarUsuarios()">Usuarios</a></li>
             <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
             <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
-            <li><a href="#">Emergencias</a></li>
+            <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
             <li><a href="#">Status</a></li>
-            <li><a href="#">Logs</a></li>
-            <li><a href="#">Sair</a></li>
+           
+            <li><a href="{{ url_for('index') }}">Sair</a></li>
         </ul>
     </nav>
 

@@ -16,10 +16,10 @@
             <li><a href="{{url_for('adm') }}">Usuarios</a></li>
             <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
             <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
-            <li><a href="#">Emergencias</a></li>
+            <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
             <li><a href="#">Status</a></li>
-            <li><a href="#">Logs</a></li>
-            <li><a href="#">Sair</a></li>
+
+            <li><a href="{{ url_for('index') }}">Sair</a></li>
         </ul>
     </nav>
     <table class="tabela">
@@ -40,9 +40,15 @@
                     <td>{{ item['Item'] }}</td>
                     <td>{{ item['Quantidade'] }}</td>
                     <td>{{ item['Urgencia'] }}</td>
+                    <td>
+                        <a href="{{ url_for('editar_item', pi=item.PI) }}" class=" link_edit">Editar</a> <!-- Adicionamos o link de editar -->
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </body>
+<script>
+    
+</script>
 </html>

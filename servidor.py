@@ -1,10 +1,15 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify,redirect,url_for
 import pandas as pd 
 
 app = Flask(__name__)
 df = pd.read_excel('bank/login.xlsx')
 df['password'] = df['password'].astype(str)
 df_itens = pd.read_excel('bank/itens.xlsx')
+
+def obter_item_por_pi(pi):
+    item = df_itens[df_itens['PI'] == pi].to_dict(orient='records')
+    return item[0] if item else None
+
 
 def pegar_itens():
     it=pd.read_excel('bank/itens.xlsx')
@@ -95,6 +100,51 @@ def editar_itens():
 
     # Renderiza o template 'editar_itens.html' com os itens
     return render_template('editar.html', itens=lista_itens)
+
+@app.route('/editar/<pi>', methods=['GET'])
+def editar_item(pi):
+    # Obtem as informações do item com base no PI
+    item = obter_item_por_pi(pi)
+
+    if item is not None:
+        # Se o item existir, renderiza a página de edição com as informações do item
+        return render_template('edit_20.html', item=item)
+    else:
+        # Se o item não for encontrado, redireciona para a página de edição principal
+        return render_template('editar_itens')
+    
+@app.route('/salvar_edicoes', methods=['POST'])
+
+def salvar_edicoes():
+    pi = request.form['pi']
+    data = request.form['data']
+    item = request.form['item']
+    quantidade = request.form['quantidade']
+    urgencia = 'emergencia' in request.form
+    excluir_pi = 'excluir' in request.form
+
+    # Verifique se a opção "Excluir PI" foi selecionada
+    if excluir_pi:
+        itens_a_excluir = df_itens[df_itens['PI'] == pi].index
+        # Remova esses itens do DataFrame
+        df_itens.drop(itens_a_excluir, inplace=True)
+        # Salve as alterações no arquivo Excel
+        df_itens.to_excel('bank/itens.xlsx', index=False)
+    else:
+        # Atualize as informações do item no DataFrame df_itens
+        df_itens.loc[df_itens['PI'] == pi, ['Data', 'Item', 'Quantidade', 'Urgencia']] = [data, item, quantidade, urgencia]
+
+    # Salve as alterações no arquivo Excel
+    df_itens.to_excel('bank/itens.xlsx', index=False)
+
+    return redirect(url_for('editar_itens'))
+
+@app.route('/emergencia', methods=['GET'])
+def emergencia_status():
+    # Filtra os itens de emergência do DataFrame df_itens
+    itens_emergencia = df_itens[df_itens['Urgencia'] == True].to_dict(orient='records')
+
+    return render_template('emergencia.html', itens_emergencia=itens_emergencia)
 
 if __name__ == '__main__':
     app.run(debug=True)

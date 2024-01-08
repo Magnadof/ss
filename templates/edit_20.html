@@ -9,11 +9,23 @@
     <link rel="stylesheet" href="/static/styles/edit20.css">
 </head>
 <body>
+    <div class="overlay"></div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#" onclick="carregarUsuarios()">Usuarios</a></li>
+            <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
+            <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
+            <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
+            <li><a href="#">Status</a></li>
+    
+            <li><a href="{{ url_for('index') }}">Sair</a></li>
+        </ul>
+    </nav>
     <div class="container">
         <h2>Editar Item</h2>
-        <form action="#" method="post">
+        <form action="{{ url_for('salvar_edicoes') }}" method="post">
             <label for="pi">PI:</label>
-            <input type="text" id="pi" name="pi" value="{{ item['PI'] }}" readonly>
+            <input type="text" id="pi" name="pi" value="{{ item['PI'] }}" >
 
             <label for="data">Data:</label>
             <input type="date" id="data" name="data" value="{{ item['Data'] }}" required>
