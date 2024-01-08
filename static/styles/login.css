@@ -1,5 +1,5 @@
 body {
-    background-image: url('/static/imgs/plameras.png');
+    background-image: url('/static/imgs/login.jpeg');
     background-size: cover; /* Isso garante que a imagem cubra todo o fundo */
     background-position: center; /* Isso centraliza a imagem no fundo */
     background-repeat: no-repeat; /* Isso evita a repetição da imagem */
@@ -10,13 +10,20 @@ body {
     margin: 0;
 }
 
+
+
+
 .container {
     /* Restante do seu estilo para o contêiner */
+    background-color: #a06e459a;
     width: 300px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);}
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color:black;
+}
+    
 
 form {
     display: flex;

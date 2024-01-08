@@ -5,7 +5,14 @@ app = Flask(__name__)
 df = pd.read_excel('bank/login.xlsx')
 df['password'] = df['password'].astype(str)
 df_itens = pd.DataFrame(columns=['PI', 'Data', 'Item', 'Quantidade', 'Urgencia'])
-
+itens = [
+    {'PI': '123', 'Data': '2022-01-01', 'Item': 'Item 1', 'Quantidade': 5, 'Urgencia': False},
+    {'PI': '456', 'Data': '2022-02-01', 'Item': 'Item 2', 'Quantidade': 10, 'Urgencia': True},
+    # Adicione mais itens conforme necessário
+]
+def pegar_itens():
+    it=pd.read_excel('bank/itens.xlsx')
+    return it.to_dict(orient='records')
 
 def verificar_login(username, password):
     # Verifique se o usuário está presente no DataFrame
@@ -84,5 +91,17 @@ def cadastrar_itens():
         print('Item cadastrado com sucesso!')
 
     return render_template('cadastrar_itens.html')
+
+@app.route('/editar_itens', methods=['GET'])
+def editar_itens():
+    # Lógica para obter os itens do banco de dados ou DataFrame
+    # Neste exemplo, usaremos df_itens, mas você deve adaptar conforme necessário
+
+    # Converta os dados do DataFrame para uma lista de dicionários para o template
+    lista_itens = pegar_itens()
+
+    # Renderiza o template 'editar_itens.html' com os itens
+    return render_template('editar.html', itens=lista_itens)
+
 if __name__ == '__main__':
     app.run(debug=True)
