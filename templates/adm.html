@@ -13,12 +13,12 @@
     <div class="overlay"></div>
     <nav class="navbar">
         <ul>
-            <li><a href="#" onclick="carregarUsuarios()">Usuarios</a></li>
+    <li><a href="#" onclick="carregarUsuarios()">Usuarios</a></li>
             <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
             <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
             <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
             
-            <li><a href="#">Status</a></li>
+            <li><a href="{{url_for('status')}}">Status</a></li>
             
             <li><a href="{{ url_for('index') }}">Sair</a></li>
         </ul>
@@ -32,7 +32,9 @@
         <!-- Div para exibir a lista de usuários -->
         <div id="lista-usuarios"></div>
     </div>
-
+    <SCript>
+        recarregar_usuarios()
+    </SCript>
     
 </body>
 </html>

@@ -11,11 +11,15 @@ def obter_item_por_pi(pi):
     return item[0] if item else None
 
 
+
+
 def pegar_itens():
     it=pd.read_excel('bank/itens.xlsx')
-    return it.to_dict(orient='records')
+    itens=it.to_dict(orient='records')
+    return itens
 
 def verificar_login(username, password):
+    df
     # Verifique se o usuário está presente no DataFrame
     if username not in df['user_name'].values:
         return False
@@ -49,6 +53,8 @@ def index():
         if verificar_login(username, password):
             if username =='adm':
                 return render_template('adm.html')
+            elif username != 'adm':
+                return render_template('bemvindo.html') 
             else:
                 return render_template('bemvindo.html')
         else:
@@ -83,9 +89,10 @@ def cadastrar_itens():
 
         # Verifica se a checkbox "emergencia" está marcada
         emergencia = 'emergencia' in request.form
-        em = pd.DataFrame({'PI': [pi], 'Data': [data], 'Item': [item], 'Quantidade': [quantidade], 'Urgencia': [emergencia]})
+        em = pd.DataFrame({'PI': [pi], 'Data': [data], 'Item': [item], 'Quantidade': [quantidade], 'Urgencia': [emergencia],"Status": "Em esperae"})
         df_itens = pd.concat([df_itens, em], ignore_index=True)
-        df_itens.to_excel('bank/itens.xlsx', index=False)  # Salva os dados no arquivo Excel
+        df_itens.to_excel('bank/itens.xlsx', index=False)
+        df_itens=pd.read_excel('bank/itens.xlsx')  # Salva os dados no arquivo Excel
         print('Item cadastrado com sucesso!')
 
     return render_template('cadastrar_itens.html')
@@ -102,19 +109,23 @@ def editar_itens():
     return render_template('editar.html', itens=lista_itens)
 
 @app.route('/editar/<pi>', methods=['GET'])
+
 def editar_item(pi):
-    # Obtem as informações do item com base no PI
-    item = obter_item_por_pi(pi)
+    item = obter_item_por_pi(int(pi))
+ 
 
     if item is not None:
         # Se o item existir, renderiza a página de edição com as informações do item
+        print(f"Item encontrado: {item}")
         return render_template('edit_20.html', item=item)
     else:
         # Se o item não for encontrado, redireciona para a página de edição principal
-        return render_template('editar_itens')
+        print("Item não encontrado.")
+        return render_template('editar.html')
     
-@app.route('/salvar_edicoes', methods=['POST'])
 
+
+@app.route('/salvar_edicoes', methods=['POST'])
 def salvar_edicoes():
     pi = request.form['pi']
     data = request.form['data']
@@ -122,22 +133,23 @@ def salvar_edicoes():
     quantidade = request.form['quantidade']
     urgencia = 'emergencia' in request.form
     excluir_pi = 'excluir' in request.form
+    status = request.form['status']
 
     # Verifique se a opção "Excluir PI" foi selecionada
     if excluir_pi:
-        itens_a_excluir = df_itens[df_itens['PI'] == pi].index
+        itens_a_excluir = df_itens[df_itens['PI'] == int(pi)].index
         # Remova esses itens do DataFrame
         df_itens.drop(itens_a_excluir, inplace=True)
-        # Salve as alterações no arquivo Excel
-        df_itens.to_excel('bank/itens.xlsx', index=False)
     else:
+      
         # Atualize as informações do item no DataFrame df_itens
-        df_itens.loc[df_itens['PI'] == pi, ['Data', 'Item', 'Quantidade', 'Urgencia']] = [data, item, quantidade, urgencia]
+        df_itens.loc[df_itens['PI'] == int(pi), ['Data', 'Item', 'Quantidade', 'Urgencia', 'Status']] = [data, item, quantidade, urgencia, status]
 
     # Salve as alterações no arquivo Excel
     df_itens.to_excel('bank/itens.xlsx', index=False)
 
     return redirect(url_for('editar_itens'))
+
 
 @app.route('/emergencia', methods=['GET'])
 def emergencia_status():
@@ -145,6 +157,13 @@ def emergencia_status():
     itens_emergencia = df_itens[df_itens['Urgencia'] == True].to_dict(orient='records')
 
     return render_template('emergencia.html', itens_emergencia=itens_emergencia)
+
+
+@app.route('/status', methods=['GET'])
+def status():
+    lista_itens = pegar_itens()
+    return render_template('status.html', itens=lista_itens)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,47 @@
+<!-- status.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status dos Itens</title>
+    <link rel="stylesheet" href="/static/styles/status.css">
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="navbar">
+        <ul>
+            <li><a href="#" onclick="carregarUsuarios()">Usuarios</a></li>
+            <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
+            <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
+            <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
+            <li><a href="{{ url_for('status')}}">Status</a></li>
+
+            <li><a href="{{ url_for('index') }}">Sair</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h2>Status dos Itens</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>PI</th>
+                    <th>Item</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itens %}
+                    <tr>
+                        <td>{{ item['PI'] }}</td>
+                        <td>{{ item['Item'] }}</td>
+                        <td>{{ item['Status'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

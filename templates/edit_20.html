@@ -12,12 +12,13 @@
     <div class="overlay"></div>
     <nav class="navbar">
         <ul>
-            <li><a href="#" onclick="carregarUsuarios()">Usuarios</a></li>
+            <li><a href="{{url_for('adm')}}">Usuarios</a></li>
             <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
             <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
             <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
-            <li><a href="#">Status</a></li>
-    
+            
+            <li><a href="{{url_for('status')}}">Status</a></li>
+            
             <li><a href="{{ url_for('index') }}">Sair</a></li>
         </ul>
     </nav>
@@ -35,6 +36,18 @@
 
             <label for="quantidade">Quantidade:</label>
             <input type="number" id="quantidade" name="quantidade" value="{{ item['Quantidade'] }}" required>
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="Em espera" {% if item['Status'] == 'Em espera' %}selected{% endif %}>Em espera</option>
+                <option value="Solda" {% if item['Status'] == 'Em solda' %}selected{% endif %}>Solda</option>
+                <option value="Usinagem" {% if item['Status'] == 'Em usinagem' %}selected{% endif %}>Usinagem</option>
+                <option value="Injeção" {% if item['Status'] == 'Em injeção' %}selected{% endif %}>Injeção</option>
+                <option value="Revestimento" {% if item['Status'] == 'Em revestimento' %}selected{% endif %}>Revestimento</option>
+                <option value="Acabamento" {% if item['Status'] == 'Em acabamento' %}selected{% endif %}>Acabamento</option>
+                <option value="Pintura" {% if item['Status'] == 'Em pintura' %}selected{% endif %}>Pintura</option>
+                <option value="Expedição" {% if item['Status'] == 'Em expedição' %}selected{% endif %}>Expedição</option>
+            </select>
+            
 
             <div class="emergency-checkbox">
                 <input type="checkbox" id="emergencia" name="emergencia" {% if item['Urgencia'] %}checked{% endif %}>
