@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify,redirect,url_for
 import pandas as pd 
 
+
 app = Flask(__name__)
 df = pd.read_excel('bank/login.xlsx')
 df['password'] = df['password'].astype(str)
@@ -20,7 +21,7 @@ def pegar_itens():
 
 def verificar_login(username, password):
     df
-    # Verifique se o usuário está presente no DataFrame
+    username=username.lower()
     if username not in df['user_name'].values:
         return False
 
@@ -49,9 +50,8 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
         if verificar_login(username, password):
-            if username =='adm':
+            if username.lower() =='adm':
                 return render_template('adm.html')
             elif username != 'adm':
                 return render_template('bemvindo.html') 

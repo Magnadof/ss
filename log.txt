@@ -1,0 +1,9 @@
+DEBUG:root:Início do programa
+DEBUG:root:IP do servidor: 127.0.1.1
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 796-279-920
+INFO:werkzeug: * Detected change in '/home/algor/Área de Trabalho/projetos/script/servidor.py', reloading
+DEBUG:root:Início do programa
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 796-279-920
+INFO:werkzeug: * Detected change in '/home/algor/Área de Trabalho/projetos/script/servidor.py', reloading

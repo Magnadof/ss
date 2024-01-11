@@ -1,0 +1,56 @@
+<!-- templates/editar.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/editar.css">
+    <title>Editar Itens</title>
+</head>
+<body>
+    <h1>Editar Itens</h1>
+    <div class="overlay"></div>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{url_for('adm')}}">Usuarios</a></li>
+            <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
+            <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
+            <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
+            
+            <li><a href="{{url_for('status')}}">Status</a></li>
+            
+            <li><a href="{{ url_for('index') }}">Sair</a></li>
+        </ul>
+    </nav>
+
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th>PI</th>
+                <th>Data</th>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Urgência</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itens %}
+                <tr>
+                    <td>{{ item['PI'] }}</td>
+                    <td>{{ item['Data'] }}</td>
+                    <td>{{ item['Item'] }}</td>
+                    <td>{{ item['Quantidade'] }}</td>
+                    <td>{{ item['Urgencia'] }}</td>
+                    <td>
+                        <a href="{{ url_for('editar_item', pi=item.PI) }}" class=" link_edit">Editar</a> <!-- Adicionamos o link de editar -->
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<script>
+    
+</script>
+</html>

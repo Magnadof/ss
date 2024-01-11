@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+    <link rel="stylesheet" href="/static/styles/cadastrar_itens.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{url_for('adm')}}">Usuarios</a></li>
+            <li><a href="{{ url_for('cadastrar_itens') }}">Cadastrar</a></li>
+            <li><a href="{{ url_for('editar_itens') }}">Editar</a></li>
+            <li><a href="{{ url_for('emergencia_status') }}">Emergencias</a></li>
+            
+            <li><a href="{{url_for('status')}}">Status</a></li>
+            
+            <li><a href="{{ url_for('index') }}">Sair</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Cadastro</h2>
+        <form action="{{ url_for('cadastrar_itens') }}" method="post">
+            <label for="pi">PI:</label>
+            <input type="number" id="pi" name="pi" required>
+
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" required>
+
+            <label for="item">Item:</label>
+            <input type="text" id="item" name="item" required>
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" required>
+
+            <div class="emergency-checkbox">
+                <input type="checkbox" id="emergencia" name="emergencia">
+                <label for="emergencia">Emergência</label>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+</body>
+</html>
